@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Todos!</title>
+
+    <link href="bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<main role="main">
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-6">
+                <h1>Todo App</h1>
+
+                <div class="alert" id="alert-text" role="alert" hidden></div>
+
+                <form id="add-text">
+
+                    <div class="form-group">
+                        <label for="textTodo">Text</label>
+                        <input type="text" class="form-control" id="textTodo" name="text" aria-describedby="textTodo" placeholder="Your to do..." value="">
+                    </div>
+                    <input type="hidden" name="id" value="">
+                    <button type="submit" class="btn btn-primary">Save</button>
+
+                </form>
+            </div><!-- .col-* -->
+
+            <div class="col-6">
+                <ul id="todo-container"></ul>
+            </div>
+        </div><!-- .row -->
+
+    </div><!-- .container -->
+
+</main><!-- main -->
+
+
+<template id="list-todo">
+    <li></li>
+</template>
+
+
+<script type="application/javascript">
+
+    // Get template li
+    const template = document.getElementById('list-todo');
+
+    // Get form element
+    document.getElementById('add-text').addEventListener('submit', function(e) {
+        // stop to submit
+        e.preventDefault();
+
+        if (e.target[0].value) {
+            // Find template we created
+            const clone = document.importNode(template.content, true);
+            const li = clone.querySelector("li");
+            li.textContent = e.target[0].value;
+
+            const container = document.getElementById('todo-container');
+
+            fetch();
+
+            container.append(clone);
+
+            e.target[0].value = '';
+        } else {
+            const el = document.getElementById('alert-text');
+            el.innerHTML = "Tidak boleh kosong";
+            el.className += " alert-danger";
+            el.removeAttribute("hidden");
+        }
+    });
+
+</script>
+</body>
+</html>
